@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RoomScope Field Workflow Mockup</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      background: #eef2f6;
+      color: #172033;
+    }
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 24px;
+    }
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #0f766e, #0ea5e9);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+    }
+    .pill {
+      background: white;
+      border: 1px solid #d8e0ea;
+      color: #536174;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+    }
+    .device {
+      background: #0f172a;
+      border-radius: 34px;
+      padding: 14px;
+      box-shadow: 0 30px 80px rgba(15, 23, 42, .22);
+    }
+    .screen {
+      background: #f8fafc;
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 720px;
+      display: grid;
+      grid-template-columns: 290px 1fr 330px;
+    }
+    .sidebar {
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      padding: 22px;
+    }
+    .main {
+      padding: 24px;
+    }
+    .right {
+      background: #ffffff;
+      border-left: 1px solid #e2e8f0;
+      padding: 22px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: 28px; letter-spacing: -.03em; margin-bottom: 6px; }
+    h2 { font-size: 18px; margin-bottom: 14px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    .muted { color: #64748b; font-size: 14px; line-height: 1.4; }
+    .navitem, .room, .system, .flag, .field, .pdf-card {
+      border: 1px solid #e2e8f0;
+      background: white;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+    .navitem.active, .room.active {
+      border-color: #0ea5e9;
+      background: #ecfeff;
+    }
+    .room {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .room:hover, .system:hover { border-color: #38bdf8; }
+    .status {
+      font-size: 12px;
+      color: #0f766e;
+      background: #ccfbf1;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .status.warn { color: #92400e; background: #fef3c7; }
+    .status.blank { color: #64748b; background: #f1f5f9; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .system {
+      cursor: pointer;
+      min-height: 112px;
+    }
+    .system.selected {
+      border-color: #14b8a6;
+      background: #f0fdfa;
+    }
+    .system.flagged {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+    .label {
+      color: #64748b;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .field strong { display: block; margin-bottom: 4px; }
+    .checkboxes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .check {
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 9px;
+      font-size: 13px;
+      background: #f8fafc;
+    }
+    .check.on {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 13px;
+      padding: 12px 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .primary { background: #0f766e; color: white; }
+    .secondary { background: #e2e8f0; color: #334155; }
+    .warning { background: #f59e0b; color: white; }
+    .buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .flag {
+      border-color: #fde68a;
+      background: #fffbeb;
+    }
+    .pdf-card {
+      background: #f8fafc;
+    }
+    .pdf-page {
+      background: white;
+      min-height: 260px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, .08);
+      font-size: 13px;
+    }
+    .divider { height: 1px; background: #e2e8f0; margin: 14px 0; }
+    .small { font-size: 12px; }
+    .tabbar {
+      display: none;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      padding: 10px;
+      gap: 8px;
+    }
+    .tabbar button { flex: 1; }
+    @media (max-width: 920px) {
+      .shell { padding: 12px; }
+      .screen { grid-template-columns: 1fr; }
+      .sidebar, .right { display: none; }
+      .tabbar { display: flex; }
+      .device { border-radius: 24px; padding: 8px; }
+      .grid { grid-template-columns: 1fr; }
+      .screen { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand"><div class="logo">RS</div> RoomScope</div>
+      <div class="pill">Mockup: field survey → estimator handoff → customer PDF</div>
+    </div>
+
+    <div class="device">
+      <div class="screen">
+        <aside class="sidebar">
+          <div class="label">Project</div>
+          <h2>Smith Residence</h2>
+          <p class="muted">New Construction Smart Home<br>Builder: North Ridge Homes</p>
+
+          <div class="navitem active">
+            <strong>Project Intake</strong>
+            <p class="muted small">Rack, ISP, panel, priorities</p>
+          </div>
+          <div class="navitem active">
+            <strong>Room Survey</strong>
+            <p class="muted small">Kitchen selected</p>
+          </div>
+          <div class="navitem">
+            <strong>Estimator Flags</strong>
+            <p class="muted small">4 do-not-miss notes</p>
+          </div>
+          <div class="navitem">
+            <strong>PDF Export</strong>
+            <p class="muted small">Customer + appendix</p>
+          </div>
+
+          <div class="divider"></div>
+          <div class="label">Infrastructure</div>
+          <p class="muted"><strong>Rack:</strong> Basement mechanical room</p>
+          <p class="muted"><strong>ISP:</strong> Garage left wall</p>
+          <p class="muted"><strong>Panel:</strong> Utility room</p>
+        </aside>
+
+        <main class="main">
+          <h1>Kitchen survey</h1>
+          <p class="muted">Select systems, capture owner requests, and flag anything the estimator must not miss.</p>
+
+          <div class="grid">
+            <div class="system selected">
+              <div class="label">Network / Wi‑Fi</div>
+              <h3>TV wiring + Wi‑Fi support</h3>
+              <p class="muted small">TV wall wiring requested. Wi‑Fi coverage important near breakfast nook.</p>
+              <span class="status">Requested</span>
+            </div>
+            <div class="system selected">
+              <div class="label">Lighting / Lutron</div>
+              <h3>Lutron scene control</h3>
+              <p class="muted small">Keypad by pantry. Owner wants simple dinner / cleanup scenes.</p>
+              <span class="status">Requested</span>
+            </div>
+            <div class="system selected">
+              <div class="label">Audio</div>
+              <h3>2-speaker indoor zone</h3>
+              <p class="muted small">In-ceiling speakers, clean appearance preferred.</p>
+              <span class="status">Requested</span>
+            </div>
+            <div class="system flagged">
+              <div class="label">Owner request</div>
+              <h3>No visible wall clutter</h3>
+              <p class="muted small">Include in customer PDF and estimator appendix.</p>
+              <span class="status warn">Estimator Flag</span>
+            </div>
+            <div class="system">
+              <div class="label">Shades</div>
+              <h3>Future phase</h3>
+              <p class="muted small">Wire/prep now if practical. Quote separately.</p>
+              <span class="status warn">Future Phase</span>
+            </div>
+            <div class="system">
+              <div class="label">Photos</div>
+              <h3>3 photos attached</h3>
+              <p class="muted small">TV wall, keypad wall, ceiling speaker location.</p>
+              <span class="status">Attached</span>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top:16px;">
+            <div class="label">System detail example</div>
+            <h2>Audio</h2>
+            <div class="checkboxes">
+              <div class="check on">✓ Audio zone needed</div>
+              <div class="check on">✓ 2-speaker zone</div>
+              <div class="check">4-speaker zone</div>
+              <div class="check on">✓ Indoor</div>
+              <div class="check">Outdoor</div>
+              <div class="check on">✓ Flag clean appearance</div>
+            </div>
+            <div class="buttons">
+              <button class="button primary" onclick="toast('Estimator flag added')">Flag for Estimator</button>
+              <button class="button secondary" onclick="toast('Photo attached')">Add Photo</button>
+              <button class="button secondary" onclick="toast('Included in customer PDF')">Include in PDF</button>
+            </div>
+          </div>
+        </main>
+
+        <aside class="right">
+          <h2>Estimator flags</h2>
+          <div class="flag">
+            <strong>Kitchen</strong>
+            <p class="muted small">Owner wants no visible wall clutter. Keep controls clean and minimal.</p>
+          </div>
+          <div class="flag">
+            <strong>Great Room</strong>
+            <p class="muted small">Confirm TV size and surround approach: Sonos vs AVR.</p>
+          </div>
+          <div class="flag">
+            <strong>Patio</strong>
+            <p class="muted small">Outdoor 4-speaker zone requested. Verify coverage and weather-rated locations.</p>
+          </div>
+
+          <div class="pdf-card">
+            <div class="label">PDF Preview</div>
+            <div class="pdf-page">
+              <h3>Smith Residence Survey Summary</h3>
+              <p><strong>Project:</strong> New Construction Smart Home</p>
+              <p><strong>Priorities:</strong> Reliable Wi‑Fi, clean controls, whole-home audio.</p>
+              <div class="divider"></div>
+              <p><strong>Customer Summary</strong></p>
+              <p>Kitchen: Lutron lighting, 2-speaker audio zone, TV wiring, future shade prep.</p>
+              <p>Great Room: Surround sound, Control4 remote, shades, lighting scenes.</p>
+              <div class="divider"></div>
+              <p><strong>Technical Appendix</strong></p>
+              <p>Estimator flags, infrastructure notes, photos, and open questions follow.</p>
+            </div>
+            <div class="buttons">
+              <button class="button primary" onclick="toast('Combined PDF generated')">Export PDF</button>
+            </div>
+          </div>
+        </aside>
+
+        <div class="tabbar">
+          <button class="button secondary">Project</button>
+          <button class="button primary">Room</button>
+          <button class="button warning">Flags</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toast(message) {
+      const old = document.querySelector('.toast');
+      if (old) old.remove();
+      const el = document.createElement('div');
+      el.className = 'toast';
+      el.textContent = message;
+      el.style.position = 'fixed';
+      el.style.bottom = '24px';
+      el.style.left = '50%';
+      el.style.transform = 'translateX(-50%)';
+      el.style.background = '#0f172a';
+      el.style.color = 'white';
+      el.style.padding = '12px 16px';
+      el.style.borderRadius = '999px';
+      el.style.boxShadow = '0 12px 30px rgba(15,23,42,.28)';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1800);
+    }
+  </script>
+</body>
+</html>
