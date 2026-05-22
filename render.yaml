@@ -1,0 +1,28 @@
+databases:
+  - name: roomscope-db
+    databaseName: roomscope_production
+    user: roomscope
+    plan: free
+
+services:
+  - type: web
+    name: roomscope-marketing
+    runtime: ruby
+    plan: free
+    buildCommand: "bundle install && bundle exec rails assets:precompile"
+    preDeployCommand: "bundle exec rails db:migrate"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    healthCheckPath: /up
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: roomscope-db
+          property: connectionString
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
