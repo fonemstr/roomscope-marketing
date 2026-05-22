@@ -10,7 +10,7 @@
         <span class="brand-icon">RS</span>
         <span>RoomScope</span>
       </a>
-      <a class="nav-cta" href="mailto:davids-hermes@agentmail.to?subject=RoomScope%20early%20access">Request early access</a>
+      <a class="nav-cta" href="#beta">Request early access</a>
     </nav>
 
     <div class="hero-grid">
@@ -21,7 +21,7 @@
           Capture homeowner requests, system decisions, photos, and estimator flags during the walkthrough — then turn the visit into a customer-ready PDF and technical estimator handoff.
         </p>
         <div class="hero-actions">
-          <a class="button button-primary" href="mailto:davids-hermes@agentmail.to?subject=RoomScope%20early%20access">Request early access</a>
+          <a class="button button-primary" href="#beta">Request early access</a>
           <a class="button button-secondary" href="#workflow">See the workflow</a>
         </div>
         <div class="trust-row" aria-label="Supported trades">
@@ -146,6 +146,6 @@
     <p>
       If your team sells or estimates smart home, AV, low-voltage, security, lighting, networking, or automation projects, we would like your field workflow feedback.
     </p>
-    <a class="button button-primary" href="mailto:davids-hermes@agentmail.to?subject=RoomScope%20early%20access">Request early access</a>
+    <%= render "beta_signups/form", beta_signup: @beta_signup || BetaSignup.new %>
   </section>
 </main>

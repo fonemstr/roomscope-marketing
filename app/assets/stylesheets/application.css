@@ -179,8 +179,11 @@ h3 {
   justify-content: center;
   min-height: 48px;
   padding: 14px 19px;
+  border: 0;
   border-radius: 15px;
+  font: inherit;
   font-weight: 900;
+  cursor: pointer;
 }
 
 .button-primary {
@@ -432,6 +435,119 @@ h3 {
   margin-left: auto;
 }
 
+.beta-form-card {
+  max-width: 860px;
+  margin: 34px auto 0;
+  padding: clamp(18px, 4vw, 30px);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  text-align: left;
+}
+
+.beta-form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field label,
+.checkbox-field {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.field-required label::after {
+  content: " *";
+  color: #fef3c7;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 13px 14px;
+  color: white;
+  background: rgba(15, 23, 42, 0.34);
+  font: inherit;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.field select option {
+  color: var(--slate);
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.22);
+}
+
+.checkbox-field input {
+  width: 18px;
+  height: 18px;
+}
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.form-footer p {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.form-success,
+.form-errors {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-weight: 800;
+}
+
+.form-success {
+  color: #064e3b;
+  background: #ccfbf1;
+}
+
+.form-errors {
+  color: #7f1d1d;
+  background: #fee2e2;
+}
+
+.form-errors ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
 .cta-section .button-primary {
   background: white;
   color: var(--teal-dark);
@@ -471,7 +587,8 @@ h3 {
   }
 
   .workflow-grid,
-  .system-grid {
+  .system-grid,
+  .form-grid {
     grid-template-columns: 1fr;
   }
 

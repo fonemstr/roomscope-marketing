@@ -11,6 +11,9 @@ class MarketingControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "home technology pros"
     assert_includes response.body, "estimator handoff"
     assert_includes response.body, "customer-ready PDF"
-    assert_select "a", text: /Request early access/
+    assert_select "form[action='#{beta_signups_path}']"
+    assert_select "input[name='beta_signup[email]']"
+    assert_select "input[name='beta_signup[ipads_in_field]']"
+    assert_select "button", text: /Join the beta/
   end
 end
