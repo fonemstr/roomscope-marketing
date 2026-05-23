@@ -1,0 +1,52 @@
+<% content_for :title, "RoomScope Beta Signups" %>
+
+<main class="admin-page">
+  <header class="admin-header">
+    <div>
+      <p class="eyebrow">RoomScope Admin</p>
+      <h1>Beta signups</h1>
+      <p><%= pluralize(@beta_signups.size, "request") %> captured from the marketing site.</p>
+    </div>
+    <%= link_to "Export CSV", admin_beta_signups_path(format: :csv), class: "button button-secondary" %>
+  </header>
+
+  <% if @beta_signups.any? %>
+    <section class="admin-card">
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Created</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Company</th>
+              <th>Role</th>
+              <th>Team</th>
+              <th>iPads?</th>
+              <th>Workflow</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @beta_signups.each do |signup| %>
+              <tr>
+                <td><%= signup.created_at&.strftime("%b %-d, %Y %-l:%M %p") %></td>
+                <td><%= mail_to signup.email %></td>
+                <td><%= signup.name.presence || "—" %></td>
+                <td><%= signup.company.presence || "—" %></td>
+                <td><%= signup.job_title.presence || "—" %></td>
+                <td><%= signup.team_size.presence || "—" %></td>
+                <td><%= signup.ipads_in_field? ? "Yes" : "No / unknown" %></td>
+                <td class="workflow-cell"><%= simple_format(signup.current_workflow.presence || "—") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <% else %>
+    <section class="admin-card empty-state">
+      <h2>No beta requests yet</h2>
+      <p>When someone submits the RoomScope beta form, their request will appear here.</p>
+    </section>
+  <% end %>
+</main>
