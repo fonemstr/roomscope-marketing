@@ -16,4 +16,20 @@ class MarketingControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name='beta_signup[ipads_in_field]']"
     assert_select "button", text: /Join the beta/
   end
+
+  test "sitemap lists canonical public URLs" do
+    get "/sitemap.xml"
+
+    assert_response :success
+    assert_equal "application/xml", response.media_type
+    assert_includes response.body, "<loc>https://getroomscope.com/</loc>"
+    assert_no_match(/www\.getroomscope\.com/, response.body)
+  end
+
+  test "robots advertises canonical sitemap" do
+    get "/robots.txt"
+
+    assert_response :success
+    assert_includes response.body, "Sitemap: https://getroomscope.com/sitemap.xml"
+  end
 end
