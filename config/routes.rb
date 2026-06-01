@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root "marketing#show"
+  get "privacy", to: "marketing#privacy"
+  get "support", to: "marketing#support"
   resources :beta_signups, only: :create
 
   namespace :admin do

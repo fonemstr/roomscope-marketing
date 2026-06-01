@@ -10,7 +10,11 @@
         <span class="brand-icon">RS</span>
         <span>RoomScope</span>
       </a>
-      <a class="nav-cta" href="#beta">Request early access</a>
+      <div class="nav-links">
+        <a href="/support">Support</a>
+        <a href="/privacy">Privacy</a>
+        <a class="nav-cta" href="#beta">Request early access</a>
+      </div>
     </nav>
 
     <div class="hero-grid">
@@ -148,4 +152,10 @@
     </p>
     <%= render "beta_signups/form", beta_signup: @beta_signup || BetaSignup.new %>
   </section>
+
+  <footer class="site-footer">
+    <span>© 2026 RoomScope</span>
+    <a href="/support">Support</a>
+    <a href="/privacy">Privacy Policy</a>
+  </footer>
 </main>
