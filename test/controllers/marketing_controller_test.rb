@@ -1,6 +1,32 @@
 require "test_helper"
 
 class MarketingControllerTest < ActionDispatch::IntegrationTest
+  test "roomscope app apex redirects permanently to canonical getroomscope host" do
+    host! "roomscope.app"
+
+    get "/privacy", params: { ref: "dns" }
+
+    assert_response :moved_permanently
+    assert_redirected_to "https://getroomscope.com/privacy?ref=dns"
+  end
+
+  test "roomscope app www redirects permanently to canonical getroomscope host" do
+    host! "www.roomscope.app"
+
+    get "/support"
+
+    assert_response :moved_permanently
+    assert_redirected_to "https://getroomscope.com/support"
+  end
+
+  test "canonical getroomscope host does not redirect" do
+    host! "getroomscope.com"
+
+    get root_path
+
+    assert_response :success
+  end
+
   test "homepage markets RoomScope for iPad field surveys" do
     get root_path
 
